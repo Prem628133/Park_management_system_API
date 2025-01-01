@@ -3,6 +3,6 @@ from visitors.models import visitors_details
 
 class visitorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = visitors_details # Specify the model associated with this serializer
-        fields = ['id', 'name', 'age', 'gender', 'ticket_price']  # Specify the fields to include
+        model = visitors_details 
+        fields = ['id', 'name', 'age', 'gender', 'ticket_price']  
 
