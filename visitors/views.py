@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from visitors.models import visitors_details
-from visitors.serializers import visitorSerializer
+from visitors.models import VisitorsDetails
+from visitors.serializers import VisitorSerializer
 
 
 #To list and create visitors
@@ -11,12 +11,12 @@ from visitors.serializers import visitorSerializer
 @api_view(['GET', 'POST'])
 def visitor_list_create(request):
     if request.method == 'GET':
-        visitors = visitors_details.objects.all()
-        serializer = visitorSerializer(visitors, many=True)
+        visitors = VisitorsDetails.objects.all()
+        serializer = VisitorSerializer(visitors, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = visitorSerializer(data=request.data)
+        serializer = VisitorSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -26,16 +26,16 @@ def visitor_list_create(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def visitor_detail(request, pk):
     try:
-        visitor = visitors_details.objects.get(pk=pk)
+        visitor = VisitorsDetails.objects.get(pk=pk)
     except visitor.DoesNotExist:
         return Response({"error": "Visitor not found"}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = visitorSerializer(visitor)
+        serializer = VisitorSerializer(visitor)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = visitorSerializer(visitor, data=request.data)
+        serializer = VisitorSerializer(visitor, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -65,8 +65,8 @@ def check_prices(request):
 #For visitor statistics
 @api_view(['GET'])
 def check_visitors(request):
-    total_visitors = visitors_details.objects.count()
-    total_revenue = sum(visitor.ticket_price for visitor in visitors_details.objects.all())
+    total_visitors = VisitorsDetails.objects.count()
+    total_revenue = sum(visitor.ticket_price for visitor in VisitorsDetails.objects.all())
     return Response({
         "Total Visitors": total_visitors,
         "Total Revenue": f"{total_revenue} Rs"
