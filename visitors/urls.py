@@ -1,9 +1,9 @@
 from django.urls import path
-from visitors.views import visitor_list_create, visitor_detail, check_prices, check_visitors
+from visitors.views import VisitorsList,VisitorsDetail,CheckPrice,VisitorsStats
 
 urlpatterns = [
-    path('visitors/', visitor_list_create, name='visitor-list-create'),
-    path('visitors/<int:pk>/', visitor_detail, name='visitor-detail'),
-    path('prices/', check_prices, name='check-prices'),
-    path('visitors-stats/', check_visitors, name='check-visitors'),
+    path('visitors/', VisitorsList.as_view(), name='VisitorsListCreate'),
+    path('visitors/<int:pk>/', VisitorsDetail.as_view(), name='visitorDetails'),
+    path('prices/', CheckPrice.as_view(), name='CheckPrice'),
+    path('visitor-stats/', VisitorsStats.as_view(), name='check-visitors'),
 ]

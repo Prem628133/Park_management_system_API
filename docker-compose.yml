@@ -1,0 +1,14 @@
+version: '3'
+
+
+services:
+  web:
+    build: .
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver"
+    container_name: park_managment_api
+    volumes:
+      - ./home/prem-rupyz/park_management/env/park_management_system_api:/app
+
+
+    ports:
+      - "8001:8001"
